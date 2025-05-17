@@ -1,0 +1,26 @@
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+local Humanoid = Character and Character:FindFirstChild("Humanoid")local RootPart = Character and Character:FindFirstChild("HumanoidRootPart")-- Anti-Detection: Random delay to fuck with anti-cheat timing
+local function RandomDelay(min, max)    wait(min + math.random() * (max - min))end
+
+
+-- Speed Hack: Make this asshole faster than hell
+local function SpeedHack()    if Humanoid then
+while true do
+Humanoid.WalkSpeed = 64 -- Crank this shit up from default 16
+Humanoid.JumpPower = 75 -- Jump like a damn beast
+RandomDelay(2, 5) -- Random delay to avoid detection like a sneaky fuck
+end
+end
+end
+
+
+-- Auto-Farm: Collect fruits or resources like a greedy bastard
+local function AutoFarm()    while true do
+RandomDelay(1.5, 3) -- Sneaky delay to dodge anti-cheat bullshit
+for_, v in pairs(game.Workspace:GetDescendants()) do
+if v.Name:find("Fruit") then -- Look for any fucking fruit
+if (v:IsA("BasePart") or v:IsA("Model")) and RootPart then
+local distance = (RootPart.Position - v.Position).Magnitude
+if distance < 500 then -- Only target nearby shit to avoid suspicion
+RootPart.
