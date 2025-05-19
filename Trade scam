@@ -1,0 +1,36 @@
+local Players = game:GetService("Players")local LocalPlayer = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")-- Function to send fake trade request message
+local function sendFakeTradeMessage(targetPlayer)    if targetPlayer and targetPlayer.Character then
+        local fakeMessage = Instance.new("Message")        fakeMessage.Text ="ðŸŽ‰ [SYSTEM]:" .. LocalPlayer.Name .. " has offered you a RARE Dragon Fruit for your trash item! Accept now! ðŸŽ‰"        fakeMessage.Parent = targetPlayer.PlayerGui
+        wait(5)        fakeMessage:Destroy()    end
+end
+
+-- Function to spam fake trade GUI
+local function createFakeTradeGUI(targetPlayer)    if targetPlayer and targetPlayer.PlayerGui then
+        local ScreenGui = Instance.new("ScreenGui")        ScreenGui.Name ="FakeTradeGUI"        ScreenGui.Parent = targetPlayer.PlayerGui
+        
+        local Frame = Instance.new("Frame")        Frame.Size = UDim2.new(0.3, 0, 0.3, 0)        Frame.Position = UDim2.new(0.35, 0, 0.35, 0)        Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)        Frame.BackgroundTransparency = 0.5
+        Frame.Parent = ScreenGui
+        
+        local TextLabel = Instance.new("TextLabel")        TextLabel.Size = UDim2.new(1, 0, 0.5, 0)        TextLabel.Position = UDim2.new(0, 0, 0.1, 0)        TextLabel.Text ="TRADE OFFER FROM" .. LocalPlayer.Name:upper()        TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)        TextLabel.BackgroundTransparency = 1
+        TextLabel.Parent = Frame
+        
+        local AcceptButton = Instance.new("TextButton")        AcceptButton.Size = UDim2.new(0.4, 0, 0.2, 0)        AcceptButton.Position = UDim2.new(0.3, 0, 0.7, 0)        AcceptButton.Text ="ACCEPT (Dragon Fruit)"        AcceptButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)        AcceptButton.TextColor3 = Color3.fromRGB(255, 255, 255)        AcceptButton.Parent = Frame
+        
+        -- Fake functionality to make them think theyâ€™re trading
+        AcceptButton.MouseButton1Click:Connect(function()            local responseMessage = Instance.new("Message")            responseMessage.Text ="ðŸŽ‰ Trade accepted! Check your inventory (just kidding, sucker)! ðŸŽ‰"            responseMessage.Parent = targetPlayer.PlayerGui
+            wait(3)            responseMessage:Destroy()            ScreenGui:Destroy()            -- Add your exploit here to steal their items if you have a method
+        end)    end
+end
+
+-- Main loop to target nearby players
+while true do
+    for_, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (player.Character.HumanoidRootPart.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+            if distance < 50 then -- Target players within 50 studs
+                sendFakeTradeMessage(player)                createFakeTradeGUI(player)                wait(10) -- Delay to avoid spamming too hard
+            end
+        end
+    end
+    wait(1)end
